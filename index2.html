@@ -1,0 +1,4 @@
+if (typeof amount.value == "number") { show.innerText = amount.value;
+amount.value = ""; } else { const p = document.createElement("p"); p.innerText =
+"You have entered wrong input";
+document.getElementById("wrong-input").appendChild(p); p.style.color = "red"; }

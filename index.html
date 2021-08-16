@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      ::placeholder {
+        font-size: small;
+      }
+    </style>
+  </head>
+  <body>
+    <header></header>
+    <main class="w-3/4 mx-auto">
+      <section class="bg-red-200 mt-8">
+        <h1 class="text-4xl text-center pt-4 font-semibold">
+          Let's deal with money!
+        </h1>
+        <div
+          class="grid grid-cols-3 gap-4 p-8 text-center text-white font-bold"
+        >
+          <div class="bg-blue-200 py-16">
+            <h2 class="text-3xl">Deposit</h2>
+            <h1 class="text-5xl">$<span id="depo-show">00</span></h1>
+          </div>
+          <div class="bg-blue-200 py-16">
+            <h2 class="text-3xl">Withdraw</h2>
+            <h1 class="text-5xl">$<span id="money-withdrawn">00</span></h1>
+          </div>
+          <div class="bg-blue-200 py-16">
+            <h2 class="text-3xl" id="show-total">Balance</h2>
+            <h1 class="text-5xl">$<span id="total-balance">1200</span></h1>
+          </div>
+        </div>
+      </section>
+      <section class="mt-8">
+        <div class="grid grid-cols-2 gap-2 justify-items-center">
+          <div class="bg-blue-100 p-4 py-8 w-3/4" id="wrong-input">
+            <input
+              type="text"
+              class="px-2 block border my-4"
+              id="depo-amount"
+              placeholder="$ Amount you want to deposit"
+            />
+            <button
+              id="depo-link"
+              class="text-white font-semibold p-2 bg-yellow-600 rounded"
+            >
+              Submit
+            </button>
+          </div>
+          <div class="bg-blue-100 p-4 py-8 w-3/4">
+            <input
+              type="text"
+              id="withdraw-input"
+              class="px-2 block border my-4"
+              placeholder="$ Amount you want to deposit"
+            />
+            <button
+              class="text-white font-semibold p-2 bg-yellow-600 rounded"
+              id="withdraw-button"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script>
+      document
+        .getElementById("depo-link")
+        .addEventListener("click", function () {
+          const amount = document.getElementById("depo-amount");
+          const newAmount = parseFloat(amount.value);
+          const show = document.getElementById("depo-show");
+          const previousAmount = parseFloat(show.innerText);
+          const total = document.getElementById("show-total");
+          const updatedValue = newAmount + previousAmount;
+          show.innerText = updatedValue;
+          amount.value = "";
+          const balance = document.getElementById("total-balance");
+          const previousBalance = parseFloat(balance.innerText);
+          const newBalance = previousBalance + updatedValue;
+          balance.innerText = newBalance;
+        });
+      document
+        .getElementById("withdraw-button")
+        .addEventListener("click", function () {
+          const withdraw = document.getElementById("withdraw-input");
+          const currentMoney = document.getElementById("money-withdrawn");
+          const previous = parseFloat(currentMoney.innerText);
+          const withdrawnMoney = parseFloat(withdraw.value);
+          const newWithdrawnMoney = previous + withdrawnMoney;
+          currentMoney.innerText = newWithdrawnMoney;
+          withdraw.value = "";
+          const balance = document.getElementById("total-balance");
+          const previousBalance = parseFloat(balance.innerText);
+          const reducedmoney = previousBalance - newWithdrawnMoney;
+          balance.innerText = reducedmoney;
+        });
+    </script>
+  </body>
+</html>
