@@ -56,6 +56,7 @@
             </button>
           </div>
           <div class="bg-blue-100 p-4 py-8 w-3/4">
+            <p id="p1"></p>
             <input
               type="text"
               id="withdraw-input"
@@ -73,36 +74,88 @@
       </section>
     </main>
     <script>
+      function inputId(id1) {
+        const amount = document.getElementById(id1);
+        const newAmount = parseFloat(amount.value);
+        amount.value = "";
+        return newAmount;
+      }
+      function inputId2(id2, nmount) {
+        const show = document.getElementById(id2);
+        const previousAmount = parseFloat(show.innerText);
+        const updatedValue = nmount + previousAmount;
+        show.innerText = updatedValue;
+      }
+      function availableBalance() {
+        const balance = document.getElementById("total-balance");
+        const previousBalance = parseFloat(balance.innerText);
+        return previousBalance;
+      }
+      function totalBalance(amount, isAdd) {
+        const balance = document.getElementById("total-balance");
+        const previousBalance = parseFloat(balance.innerText);
+        if (isAdd == true) {
+          const newBalance = previousBalance + amount;
+          balance.innerText = newBalance;
+        } else {
+          const newBalance = previousBalance - amount;
+          balance.innerText = newBalance;
+        }
+      }
       document
         .getElementById("depo-link")
         .addEventListener("click", function () {
-          const amount = document.getElementById("depo-amount");
-          const newAmount = parseFloat(amount.value);
+          const newAmount = inputId("depo-amount");
+          if (newAmount > 0) {
+            inputId2("depo-show", newAmount);
+
+            totalBalance(newAmount, true);
+          }
+
+          /*  const amount = document.getElementById("depo-amount");
+          const newAmount = parseFloat(amount.value); */
+
+          /*   
           const show = document.getElementById("depo-show");
-          const previousAmount = parseFloat(show.innerText);
-          const total = document.getElementById("show-total");
+          const previousAmount = parseFloat(show.innerText); 
           const updatedValue = newAmount + previousAmount;
           show.innerText = updatedValue;
-          amount.value = "";
-          const balance = document.getElementById("total-balance");
+          */
+
+          /* const balance = document.getElementById("total-balance");
           const previousBalance = parseFloat(balance.innerText);
-          const newBalance = previousBalance + updatedValue;
-          balance.innerText = newBalance;
+          const newBalance = previousBalance + newAmount;
+          balance.innerText = newBalance; */
         });
       document
         .getElementById("withdraw-button")
         .addEventListener("click", function () {
-          const withdraw = document.getElementById("withdraw-input");
-          const currentMoney = document.getElementById("money-withdrawn");
+          const withdrawnMoney = inputId("withdraw-input");
+          const lastBalance = availableBalance();
+          if (withdrawnMoney > 0 && withdrawnMoney < lastBalance) {
+            inputId2("money-withdrawn", withdrawnMoney);
+            totalBalance(withdrawnMoney, false);
+          } else {
+            // alert("you have insufficient balance");
+            const p = document.getElementById("p1");
+            p.innerText = "You have insufficient balance!";
+
+            p.style.color = "red";
+          }
+
+          /* const withdraw = document.getElementById("withdraw-input");
+          const withdrawnMoney = parseFloat(withdraw.value); 
+           withdraw.value = "";*/
+          /*   const currentMoney = document.getElementById("money-withdrawn");
           const previous = parseFloat(currentMoney.innerText);
-          const withdrawnMoney = parseFloat(withdraw.value);
+
           const newWithdrawnMoney = previous + withdrawnMoney;
-          currentMoney.innerText = newWithdrawnMoney;
-          withdraw.value = "";
-          const balance = document.getElementById("total-balance");
-          const previousBalance = parseFloat(balance.innerText);
-          const reducedmoney = previousBalance - newWithdrawnMoney;
-          balance.innerText = reducedmoney;
+          currentMoney.innerText = newWithdrawnMoney; */
+
+          // const balance = document.getElementById("total-balance");
+          // const previousBalance = parseFloat(balance.innerText);
+          // const reducedmoney = previousBalance - withdrawnMoney;
+          // balance.innerText = reducedmoney;
         });
     </script>
   </body>
